@@ -62,7 +62,7 @@ def brute_force_decryption_vigenere(text):
         y += 1
         keys = key_generator(y)
         for key in keys:
-            if check_if_in_english(dec_vigenere(text,key),60):
+            if check_if_in_english(dec_vigenere(text, key), 60):
                 print(key + ", " + dec_vigenere(text, key))
 
 print(brute_force_decryption_vigenere(encoded_input))
