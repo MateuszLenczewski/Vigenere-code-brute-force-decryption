@@ -1,7 +1,7 @@
 # You can modify your dictionary by adding its path below:
 dict_path = "dictionaries\\dictionary1000.txt"
 # You can add your encrypted text below:
-encoded_input = "Clex jsiw tsx oopp cuy qeqiw cuy wxxsrkkv"
+encoded_input = ""
 
 
 import itertools
