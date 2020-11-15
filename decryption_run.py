@@ -1,6 +1,14 @@
-zawartosc = open("dictionary.txt").read()
-def dict(word):
-    if word in zawartosc:
+# You can modify your dictionary by adding its path below:
+dict_path = "dictionary.txt"
+# You can add your encrypted text below:
+encoded_input = ""
+
+
+import itertools
+
+content = open(dict_path).read()
+def check_if_in_dict(word):
+    if word in content:
         return True
     else:
         return False
@@ -17,7 +25,7 @@ def check_if_in_english(text, accuracy):
             if sign in word:
                 word = word.replace(sign,"")
         total_words += 1
-        if dict(word):
+        if check_if_in_dict(word):
             words_in_dict += 1
     percentage = words_in_dict/total_words
     if percentage*100>=accuracy:
@@ -25,38 +33,37 @@ def check_if_in_english(text, accuracy):
     return False
 
 def key_generator(length):
-    import itertools
     alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    keywords = []
-    keywords = [''.join(k) for k in itertools.product(alphabets, repeat = length)]
+    keywords = [''.join(i) for i in itertools.product(alphabets, repeat = length)]
     return keywords
 
-def dec_vigenere(tekst, klucz):
-    tekst = tekst.upper()
-    klucz = klucz.upper()
-    wynik = ""
+def dec_vigenere(text, key):
+    text = text.upper()
+    key = key.upper()
+    result = ""
     i = 0
-    for x in tekst:
-        if i>len(klucz)-1:
+    for x in text:
+        if i>len(key)-1:
             i = 0
         if ord(x) > 64 and ord(x) < 91:
-            if (ord(x) - ord(klucz[i]))+65 < 65:
-                wynik += chr(ord(x) - ord(klucz[i]) + 26+66)
+            if (ord(x) - ord(key[i]))+65 < 65:
+                result += chr(ord(x) - ord(key[i]) + 26+65)
             else:
-                wynik += chr(ord(x) - ord(klucz[i])+65)
+                result += chr(ord(x) - ord(key[i])+65)
         else:
-            wynik += x
+            result += x
             i -=1
         i += 1
-    return wynik.lower()
+    return result.lower()
 
 
-def decode_vigenere(tekst):
-    for y in range(1,6):
+def brute_force_decryption_vigenere(text):
+    y = 0
+    while True:
+        y += 1
         keys = key_generator(y)
         for key in keys:
-            if check_if_in_english(dec_vigenere(tekst,key),60):
-                print(key + ", " + dec_vigenere(tekst, key))
+            if check_if_in_english(dec_vigenere(text,key),60):
+                print(key + ", " + dec_vigenere(text, key))
 
-
-print(decode_vigenere(text))
+print(brute_force_decryption_vigenere(encoded_input))
