@@ -16,19 +16,18 @@ def check_if_in_dict(word):
 def check_if_in_english(text, accuracy):
     text = text.lower()
     text = text.split(" ")
-    special_signs = [",",".","!","?",":",";","\"","\'","(",")","$"]
-    text_copy = []
+    special_signs = [",", ".", "!", "?", ":", ";", "\"", "\'", "(",")", "$"]
     words_in_dict = 0
     total_words = 0
     for word in text:
         for sign in special_signs:
             if sign in word:
-                word = word.replace(sign,"")
+                word = word.replace(sign, "")
         total_words += 1
         if check_if_in_dict(word):
             words_in_dict += 1
-    percentage = words_in_dict/total_words
-    if percentage*100>=accuracy:
+    percentage = words_in_dict / total_words
+    if percentage*100 >= accuracy:
         return True
     return False
 
@@ -43,16 +42,16 @@ def dec_vigenere(text, key):
     result = ""
     i = 0
     for x in text:
-        if i>len(key)-1:
+        if i > len(key)-1:
             i = 0
         if ord(x) > 64 and ord(x) < 91:
-            if (ord(x) - ord(key[i]))+65 < 65:
-                result += chr(ord(x) - ord(key[i]) + 26+65)
+            if (ord(x) - ord(key[i])) < 0:
+                result += chr(ord(x) - ord(key[i]) + 91)
             else:
-                result += chr(ord(x) - ord(key[i])+65)
+                result += chr(ord(x) - ord(key[i]) + 65)
         else:
             result += x
-            i -=1
+            i -= 1
         i += 1
     return result.lower()
 
