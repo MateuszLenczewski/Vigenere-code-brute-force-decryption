@@ -1,10 +1,11 @@
 # You can modify your dictionary by adding its path below:
 dict_path = "dictionaries\\dictionary1000.txt"
 # You can add your encrypted text below:
-encoded_input = ""
+encoded_input = "some text"
+# You can add your translation accuracy percentage below:
+decryption_accuracy = 50
 
-
-import itertools
+from itertools import product
 
 content = open(dict_path).read()
 def check_if_in_dict(word):
@@ -32,8 +33,8 @@ def check_if_in_english(text, accuracy):
     return False
 
 def key_generator(length):
-    alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    keywords = [''.join(i) for i in itertools.product(alphabets, repeat = length)]
+    alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    keywords = [''.join(i) for i in product(alphabet, repeat = length)]
     return keywords
 
 def dec_vigenere(text, key):
@@ -56,13 +57,13 @@ def dec_vigenere(text, key):
     return result.lower()
 
 
-def brute_force_decryption_vigenere(text):
+def brute_force_decryption_vigenere(text, accuracy):
     y = 0
     while True:
         y += 1
         keys = key_generator(y)
         for key in keys:
-            if check_if_in_english(dec_vigenere(text, key), 60):
+            if check_if_in_english(dec_vigenere(text, key), accuracy):
                 print(key + ", " + dec_vigenere(text, key))
 
-print(brute_force_decryption_vigenere(encoded_input))
+print(brute_force_decryption_vigenere(encoded_input, decryption_accuracy))
