@@ -1,7 +1,7 @@
 # You can modify your dictionary by adding its path below:
 dict_path = "dictionaries\\dictionary1000.txt"
 # You can add your encrypted text below:
-encoded_input = "some text"
+encoded_input = ""
 # You can add your translation accuracy percentage below:
 decryption_accuracy = 50
 
@@ -27,8 +27,8 @@ def check_if_in_english(text, accuracy):
         total_words += 1
         if check_if_in_dict(word):
             words_in_dict += 1
-    percentage = words_in_dict / total_words
-    if percentage*100 >= accuracy:
+    percentage = words_in_dict / total_words * 100
+    if percentage >= accuracy:
         return True
     return False
 
